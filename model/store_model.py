@@ -55,3 +55,22 @@ class StoreModel:
                 return "Operation failed!"
         except mysql.connector.Error as err:
             return {"Error": str(err)}
+        
+    def patch_score(self,data,id):
+        try:
+            qry="UPDATE store SET "
+            for key in data:
+                print(key,data[key])
+                qry+=f"{key}='{data[key]}',"
+            qry=qry[:-1]
+            qry+=f" WHERE id='{id}'"
+            print("query ",qry)
+            self.cur.execute(qry)
+            print(self.cur.rowcount)
+            if self.cur.rowcount > 0:
+                return "Patch method testing successfully!"
+            else:
+                return "Operation failed!"
+        except mysql.connector.Error as err:
+            return {"Error": str(err)}
+

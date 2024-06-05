@@ -1,7 +1,7 @@
 from app import app
 # from model import *
 from model.store_model import StoreModel
-from flask import request,jsonify
+from flask import request,jsonify,make_response
 
 store = [{"name": "My Store"}]
 
@@ -11,7 +11,7 @@ store_obj=StoreModel()
 @app.get("/store")
 def get_full_store():
     result = store_obj.get_full_store_details();
-    return jsonify(result) if isinstance(result,dict) else result
+    return make_response({'data':jsonify(result) if isinstance(result,dict) else result},200)
 
 @app.route("/store/create",methods=['POST'])
 def create_store():
@@ -28,3 +28,6 @@ def delete_the_store(id):
     result = store_obj.delete_store(id);
     return jsonify(result) if isinstance(result,dict) else result
 
+@app.patch('/store/patch/<id>')
+def patch_the_store(id):
+    return store_obj.patch_score(request.form, id)
