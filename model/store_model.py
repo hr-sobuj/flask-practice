@@ -73,4 +73,14 @@ class StoreModel:
                 return "Operation failed!"
         except mysql.connector.Error as err:
             return {"Error": str(err)}
+    
+    def pagination_model(self,page_no):
+        limit=2
+        start=((int(page_no)*limit)-limit)+1
+        qry=f"SELECT * FROM store limit {start},{limit}"
+        self.cur.execute(qry)
+        data=self.cur.fetchall()
+        return {
+            "payload":data
+        }
 
