@@ -36,3 +36,4 @@ def patch_the_store_controller(id):
 @app.get('/store/pages/<page_no>')
 def store_pagination_controller(page_no):
     return store_obj.pagination_model(page_no);
+
